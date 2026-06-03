@@ -3,6 +3,8 @@
 import { useRouter } from 'next/navigation';
 import { useCartStore } from '@/store/useCartStore';
 import { useForm } from 'react-hook-form';
+import { useMutation } from '@tanstack/react-query';
+import { createOrder } from '@/lib/api/orders';
 
 type CheckoutFormValues = {
 	customerName: string;
@@ -20,19 +22,30 @@ export default function CheckoutForm() {
 		formState: { errors },
 	} = useForm<CheckoutFormValues>();
 
-	const onSubmit = (data: CheckoutFormValues) => {
-		// Generate a fake order ID
-		const orderId = `ORD-${Date.now()}`;
+	const createOrderMutation = useMutation({
+		mutationFn: createOrder,
+		onSuccess: (data) => {
+			clearCart();
+			router.push(`/order/${data.orderId}`);
+		},
+	});
 
-		// Clear cart and redirect to success page
-		clearCart();
-		router.push(`/order/${orderId}`);
+	const onSubmit = (data: CheckoutFormValues) => {
+		createOrderMutation.mutate({
+			customerName: data.customerName,
+			address: data.address,
+			phoneNumber: data.phoneNumber,
+			items: useCartStore.getState().items.map((item) => ({
+				menuItemId: item.id,
+				quantity: item.quantity,
+			})),
+		});
 	};
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className='space-y-6'>
 			<div>
-				<h2 className='text-xl font-bold text-gray-800 mb-4'>Delivery Information</h2>
+				<h2 className='text-xl font-bold text-gray-400 mb-4'>Delivery Information</h2>
 				<div className='space-y-4'>
 					<div>
 						<label htmlFor='customerName' className='block text-sm font-medium text-gray-700 mb-1'>
@@ -84,7 +97,12 @@ export default function CheckoutForm() {
 				</div>
 			</div>
 
-			<button type='submit' className='w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-lg transition-colors'>
+			{createOrderMutation.error && <p className='mt-1 text-sm text-red-600'>{createOrderMutation.error.message}</p>}
+
+			<button
+				type='submit'
+				disabled={createOrderMutation.isPending}
+				className='w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-lg transition-colors'>
 				Place Order
 			</button>
 		</form>
