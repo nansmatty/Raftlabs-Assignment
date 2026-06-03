@@ -11,7 +11,7 @@ export const createOrderSchema = z.object({
 		.array(
 			z.object({
 				menuItemId: z.string().min(1, 'Menu item ID is required'),
-				quantity: z.number().int().positive('Quantity must be a positive integer'),
+				quantity: z.number().int().positive('Quantity must be a positive integer').max(20, 'Maximum quantity per item is 20'),
 			}),
 		)
 		.min(1, 'At least one item is required'),
