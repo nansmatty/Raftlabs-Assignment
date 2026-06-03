@@ -3,14 +3,16 @@
 import MenuCard from '@/components/menu/MenuCard';
 import { mockMenuItems } from '@/data/mock-menu';
 import CartSummary from '@/components/cart/CartSummary';
-import { useCart } from '@/store/CartContext';
+import { useCartStore } from '@/store/useCartStore';
 import { Clock, Star, TrendingUp } from 'lucide-react';
+import { useState } from 'react';
+import { Search } from 'lucide-react';
 
 const categories = ['All', 'Pizza', 'Burgers', 'Salads', 'Asian', 'Desserts', 'Seafood'];
 
 export default function Home() {
-	const { getTotalItems } = useCart();
-	const totalItems = getTotalItems();
+	const totalItems = useCartStore((state) => state.getTotalItems());
+	const [selectedCategory, setSelectedCategory] = useState('All');
 
 	return (
 		<div className='min-h-screen bg-gray-50'>

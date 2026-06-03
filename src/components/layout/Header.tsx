@@ -1,12 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { useCart } from '@/store/CartContext';
+import { useCartStore } from '@/store/useCartStore';
 import { ShoppingCart } from 'lucide-react';
 
 export default function Header() {
-	const { getTotalItems } = useCart();
-	const totalItems = getTotalItems();
+	const totalItems = useCartStore((state) => state.getTotalItems());
 
 	return (
 		<header className='bg-white shadow-md sticky top-0 z-50'>

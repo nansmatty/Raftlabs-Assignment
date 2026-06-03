@@ -1,7 +1,7 @@
 'use client';
 
 import { IMenuItem } from '@/types/menu';
-import { useCart } from '@/store/CartContext';
+import { useCartStore } from '@/store/useCartStore';
 import { useState } from 'react';
 import { CircleCheck } from 'lucide-react';
 
@@ -10,7 +10,7 @@ interface MenuCardProps {
 }
 
 export default function MenuCard({ item }: MenuCardProps) {
-	const { addItem } = useCart();
+	const addItem = useCartStore((state) => state.addItem);
 	const [isAdded, setIsAdded] = useState(false);
 
 	const handleAddToCart = () => {

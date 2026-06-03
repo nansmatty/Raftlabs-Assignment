@@ -1,6 +1,6 @@
 'use client';
 
-import { useCart } from '@/store/CartContext';
+import { useCartStore } from '@/store/useCartStore';
 import Link from 'next/link';
 
 interface CartSummaryProps {
@@ -8,12 +8,11 @@ interface CartSummaryProps {
 }
 
 export default function CartSummary({ showCheckoutButton = true }: CartSummaryProps) {
-	const { getTotalPrice, getTotalItems } = useCart();
-	const totalPrice = getTotalPrice();
-	const totalItems = getTotalItems();
-	const deliveryFee = totalPrice > 0 ? 3.99 : 0;
-	const tax = totalPrice * 0.08; // 8% tax
-	const finalTotal = totalPrice + deliveryFee + tax;
+	const totalPrice = useCartStore((state) => state.getTotalPrice());
+	const totalItems = useCartStore((state) => state.getTotalItems());
+	const deliveryFee = useCartStore((state) => state.getDeliveryFee());
+	const tax = useCartStore((state) => state.getTax());
+	const finalTotal = useCartStore((state) => state.getFinalTotal());
 
 	return (
 		<div className='bg-white rounded-2xl shadow-xl p-6 border border-gray-100'>

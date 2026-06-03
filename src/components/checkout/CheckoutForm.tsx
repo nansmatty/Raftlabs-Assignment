@@ -2,11 +2,11 @@
 
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import { useCart } from '@/store/CartContext';
+import { useCartStore } from '@/store/useCartStore';
 
 export default function CheckoutForm() {
 	const router = useRouter();
-	const { clearCart } = useCart();
+	const clearCart = useCartStore((state) => state.clearCart);
 	const [formData, setFormData] = useState({
 		name: '',
 		email: '',

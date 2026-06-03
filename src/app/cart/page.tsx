@@ -1,13 +1,13 @@
 'use client';
 
-import { useCart } from '@/store/CartContext';
+import { useCartStore } from '@/store/useCartStore';
 import CartItem from '@/components/cart/CartItem';
 import CartSummary from '@/components/cart/CartSummary';
 import Link from 'next/link';
 import { ShoppingCart } from 'lucide-react';
 
 export default function CartPage() {
-	const { items } = useCart();
+	const items = useCartStore((state) => state.items);
 
 	if (items.length === 0) {
 		return (

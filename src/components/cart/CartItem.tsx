@@ -1,7 +1,7 @@
 'use client';
 
-import { CartItem as CartItemType } from '@/store/CartContext';
-import { useCart } from '@/store/CartContext';
+import { CartItem as CartItemType } from '@/store/useCartStore';
+import { useCartStore } from '@/store/useCartStore';
 import { Minus, Plus, Trash2 } from 'lucide-react';
 
 interface CartItemProps {
@@ -9,7 +9,8 @@ interface CartItemProps {
 }
 
 export default function CartItem({ item }: CartItemProps) {
-	const { updateQuantity, removeItem } = useCart();
+	const updateQuantity = useCartStore((state) => state.updateQuantity);
+	const removeItem = useCartStore((state) => state.removeItem);
 
 	const handleQuantityChange = (newQuantity: number) => {
 		updateQuantity(item.name, newQuantity);

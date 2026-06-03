@@ -2,13 +2,13 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useCart } from '@/store/CartContext';
+import { useCartStore } from '@/store/useCartStore';
 import CheckoutForm from '@/components/checkout/CheckoutForm';
 import CartSummary from '@/components/cart/CartSummary';
 
 export default function CheckoutPage() {
 	const router = useRouter();
-	const { items } = useCart();
+	const items = useCartStore((state) => state.items);
 
 	useEffect(() => {
 		// Redirect to cart if empty
