@@ -1,27 +1,41 @@
-import { MongoClient } from 'mongodb';
+import mongoose from 'mongoose';
 
-const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017';
+const MONGODB_URI = process.env.MONGODB_URI;
 
-if (!uri) {
+if (!MONGODB_URI) {
 	throw new Error('MONGODB_URI environment variable is not set');
 }
 
-let client: MongoClient;
+type CachedConnection = {
+	conn: typeof mongoose | null;
+	promise: Promise<typeof mongoose> | null;
+};
 
 declare global {
-	var _mongoClient: MongoClient | undefined;
+	var mongooseCache: CachedConnection | undefined;
 }
 
-if (process.env.NODE_ENV === 'development') {
-	if (!global._mongoClient) {
-		global._mongoClient = new MongoClient(uri);
-	}
-	client = global._mongoClient;
-} else {
-	client = new MongoClient(uri);
+const cached: CachedConnection = global.mongooseCache || {
+	conn: null,
+	promise: null,
+};
+
+if (!global.mongooseCache) {
+	global.mongooseCache = cached;
 }
 
 export async function connectDB() {
-	await client.connect();
-	return client.db('raftlabs-order-management');
+	if (cached.conn) {
+		return cached.conn;
+	}
+
+	if (!cached.promise) {
+		cached.promise = mongoose.connect(MONGODB_URI!, {
+			dbName: 'raftlabs-order-management',
+		});
+	}
+
+	cached.conn = await cached.promise;
+
+	return cached.conn;
 }
