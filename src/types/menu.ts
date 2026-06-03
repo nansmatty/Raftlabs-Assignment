@@ -1,5 +1,4 @@
-export interface MenuItem {
-	_id?: string;
+export interface IMenuItem {
 	name: string;
 	description: string;
 	imageUrl: string;
