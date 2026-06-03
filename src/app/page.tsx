@@ -6,13 +6,16 @@ import CartSummary from '@/components/cart/CartSummary';
 import { useCartStore } from '@/store/useCartStore';
 import { Clock, Star, TrendingUp } from 'lucide-react';
 import { useState } from 'react';
-import { Search } from 'lucide-react';
-
-const categories = ['All', 'Pizza', 'Burgers', 'Salads', 'Asian', 'Desserts', 'Seafood'];
+import { useQuery } from '@tanstack/react-query';
+import { fetchMenuItems } from '@/lib/api/menus';
 
 export default function Home() {
 	const totalItems = useCartStore((state) => state.getTotalItems());
-	const [selectedCategory, setSelectedCategory] = useState('All');
+
+	const { data: menuItems } = useQuery({
+		queryKey: ['menuItems'],
+		queryFn: fetchMenuItems,
+	});
 
 	return (
 		<div className='min-h-screen bg-gray-50'>
@@ -74,7 +77,7 @@ export default function Home() {
 					{/* Menu Grid */}
 					<div className='flex-1'>
 						<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
-							{mockMenuItems.map((item) => (
+							{menuItems?.map((item) => (
 								<MenuCard key={item.name} item={item} />
 							))}
 						</div>
