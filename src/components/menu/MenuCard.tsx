@@ -20,36 +20,32 @@ export default function MenuCard({ item }: MenuCardProps) {
 	};
 
 	return (
-		<div className='bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300'>
-			<div className='relative h-48 overflow-hidden'>
-				<img src={item.imageUrl} alt={item.name} className='w-full h-full object-cover' />
-			</div>
-			<div className='p-4'>
-				<h3 className='text-lg font-semibold text-gray-800 mb-2'>{item.name}</h3>
-				<p className='text-gray-600 text-sm mb-4 line-clamp-2'>{item.description}</p>
-				<div className='flex items-center justify-between'>
-					<span className='text-xl font-bold text-orange-500'>${item.price.toFixed(2)}</span>
-					<button
-						onClick={handleAddToCart}
-						className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
-							isAdded ? 'bg-green-500 text-white' : 'bg-orange-500 hover:bg-orange-600 text-white'
-						}`}>
-						{isAdded ? (
-							<span className='flex items-center space-x-1'>
-								<svg xmlns='http://www.w3.org/2000/svg' className='h-5 w-5' viewBox='0 0 20 20' fill='currentColor'>
-									<path
-										fillRule='evenodd'
-										d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'
-										clipRule='evenodd'
-									/>
-								</svg>
-								<span>Added</span>
-							</span>
-						) : (
-							'Add to Cart'
-						)}
-					</button>
+		<div className='bg-white rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 group border border-gray-100 hover:border-orange-200'>
+			<div className='relative h-56 overflow-hidden bg-gray-100'>
+				<img src={item.imageUrl} alt={item.name} className='w-full h-full object-cover group-hover:scale-110 transition-transform duration-500' />
+				<div className='absolute top-3 right-3 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full'>
+					<span className='text-sm font-bold text-gray-900'>${item.price.toFixed(2)}</span>
 				</div>
+			</div>
+			<div className='p-5'>
+				<h3 className='text-xl font-bold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors'>{item.name}</h3>
+				<p className='text-gray-600 text-sm mb-5 line-clamp-2 leading-relaxed'>{item.description}</p>
+				<button
+					onClick={handleAddToCart}
+					className={`w-full py-3 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center space-x-2 ${
+						isAdded
+							? 'bg-green-500 text-white shadow-lg shadow-green-500/30'
+							: 'bg-orange-500 hover:bg-orange-600 text-white shadow-lg shadow-orange-500/30 hover:shadow-xl hover:shadow-orange-500/40'
+					}`}>
+					{isAdded ? (
+						<>
+							<CircleCheck className='h-5 w-5' />
+							<span>Added to Cart</span>
+						</>
+					) : (
+						<span>Add to Cart</span>
+					)}
+				</button>
 			</div>
 		</div>
 	);
