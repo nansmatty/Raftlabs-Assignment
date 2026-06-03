@@ -2,6 +2,7 @@ import { apiHandler } from '@/lib/api-handler';
 import { ApiError } from '@/lib/ApiError';
 import { connectDB } from '@/lib/db';
 import { Order } from '@/models/order.model';
+import { updateOrderStatusSchema } from '@/schemas/order.schema';
 import { ORDER_STATUS } from '@/types/order';
 import mongoose from 'mongoose';
 
@@ -34,6 +35,7 @@ export async function PATCH(request: Request, { params }: RouteParams) {
 		await connectDB();
 		const { orderId } = await params;
 		const body = await request.json();
+		const { status } = updateOrderStatusSchema.parse(body);
 
 		if (!mongoose.Types.ObjectId.isValid(orderId)) {
 			throw new ApiError(400, 'Invalid order ID');
@@ -41,11 +43,11 @@ export async function PATCH(request: Request, { params }: RouteParams) {
 
 		const validStatuses = Object.values(ORDER_STATUS);
 
-		if (!validStatuses.includes(body.status)) {
+		if (!validStatuses.includes(status)) {
 			throw new ApiError(400, 'Invalid order status');
 		}
 
-		const order = await Order.findByIdAndUpdate(orderId, { status: body.status }, { new: true }).lean();
+		const order = await Order.findByIdAndUpdate(orderId, { status }, { new: true }).lean();
 
 		if (!order) {
 			throw new ApiError(404, 'Order not found');
