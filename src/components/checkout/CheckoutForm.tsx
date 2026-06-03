@@ -36,7 +36,7 @@ export default function CheckoutForm() {
 			address: data.address,
 			phoneNumber: data.phoneNumber,
 			items: useCartStore.getState().items.map((item) => ({
-				menuItemId: item.id,
+				menuItemId: item._id,
 				quantity: item.quantity,
 			})),
 		});

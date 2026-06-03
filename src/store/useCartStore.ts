@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 export interface CartItem {
-	id: string;
+	_id: string;
 	name: string;
 	description: string;
 	price: number;
@@ -12,8 +12,8 @@ export interface CartItem {
 interface CartState {
 	items: CartItem[];
 	addItem: (item: Omit<CartItem, 'quantity'>) => void;
-	removeItem: (itemName: string) => void;
-	updateQuantity: (itemName: string, quantity: number) => void;
+	removeItem: (itemId: string) => void;
+	updateQuantity: (itemId: string, quantity: number) => void;
 	clearCart: () => void;
 	getTotalItems: () => number;
 	getTotalPrice: () => number;
@@ -27,11 +27,11 @@ export const useCartStore = create<CartState>((set, get) => ({
 
 	addItem: (item) => {
 		set((state) => {
-			const existing = state.items.find((i) => i.id === item.id);
+			const existing = state.items.find((i) => i._id === item._id);
 			if (existing) {
 				// Increase quantity, max 20
 				return {
-					items: state.items.map((i) => (i.id === item.id ? { ...i, quantity: Math.min(i.quantity + 1, 20) } : i)),
+					items: state.items.map((i) => (i._id === item._id ? { ...i, quantity: Math.min(i.quantity + 1, 20) } : i)),
 				};
 			}
 			// Add new item with id based on name
@@ -49,7 +49,7 @@ export const useCartStore = create<CartState>((set, get) => ({
 
 	removeItem: (itemId) => {
 		set((state) => ({
-			items: state.items.filter((i) => i.id !== itemId),
+			items: state.items.filter((i) => i._id !== itemId),
 		}));
 	},
 
@@ -59,7 +59,7 @@ export const useCartStore = create<CartState>((set, get) => ({
 			return;
 		}
 		set((state) => ({
-			items: state.items.map((i) => (i.id === itemId ? { ...i, quantity: Math.min(quantity, 20) } : i)),
+			items: state.items.map((i) => (i._id === itemId ? { ...i, quantity: Math.min(quantity, 20) } : i)),
 		}));
 	},
 
