@@ -1,6 +1,7 @@
 'use client';
 
 import { ORDER_STATUS } from '@/types/order';
+import { CircleCheck, ChefHat, Bike, PackageCheck } from 'lucide-react';
 
 type OrderStatus = (typeof ORDER_STATUS)[keyof typeof ORDER_STATUS];
 
@@ -12,25 +13,25 @@ const statusSteps = [
 	{
 		key: ORDER_STATUS.ORDER_RECEIVED,
 		label: 'Order Received',
-		icon: '📝',
+		icon: CircleCheck,
 		description: 'We have received your order',
 	},
 	{
 		key: ORDER_STATUS.PREPARING,
 		label: 'Preparing',
-		icon: '👨‍🍳',
+		icon: ChefHat,
 		description: 'Your food is being prepared',
 	},
 	{
 		key: ORDER_STATUS.OUT_FOR_DELIVERY,
 		label: 'Out for Delivery',
-		icon: '🚗',
+		icon: Bike,
 		description: 'Your order is on the way',
 	},
 	{
 		key: ORDER_STATUS.DELIVERED,
 		label: 'Delivered',
-		icon: '✅',
+		icon: PackageCheck,
 		description: 'Order delivered successfully',
 	},
 ];
@@ -51,14 +52,15 @@ export default function OrderStatusTimeline({ currentStatus }: OrderStatusTimeli
 						const isCompleted = index <= currentStepIndex;
 						const isCurrent = index === currentStepIndex;
 
+						const IconComponent = step.icon;
 						return (
 							<div key={step.key} className='relative flex items-start space-x-4'>
 								{/* Icon circle */}
 								<div
-									className={`relative z-10 w-12 h-12 rounded-full flex items-center justify-center text-xl transition-colors ${
+									className={`relative z-10 w-12 h-12 rounded-full flex items-center justify-center transition-colors ${
 										isCompleted ? 'bg-orange-500 text-white' : 'bg-gray-200 text-gray-400'
 									}`}>
-									{step.icon}
+									<IconComponent className='h-6 w-6' />
 								</div>
 
 								{/* Content */}

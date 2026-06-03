@@ -3,6 +3,7 @@
 import { IMenuItem } from '@/types/menu';
 import { useCart } from '@/store/CartContext';
 import { useState } from 'react';
+import { CircleCheck } from 'lucide-react';
 
 interface MenuCardProps {
 	item: IMenuItem;

@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { use } from 'react';
+import { CircleCheck } from 'lucide-react';
 
 export default function OrderSuccessPage({ params }: { params: Promise<{ orderId: string }> }) {
 	const { orderId } = use(params);
@@ -15,9 +16,7 @@ export default function OrderSuccessPage({ params }: { params: Promise<{ orderId
 				<div className='bg-white rounded-lg shadow-md p-8 text-center'>
 					{/* Success Icon */}
 					<div className='w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6'>
-						<svg xmlns='http://www.w3.org/2000/svg' className='h-12 w-12 text-green-500' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
-							<path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M5 13l4 4L19 7' />
-						</svg>
+						<CircleCheck className='h-12 w-12 text-green-500' />
 					</div>
 
 					{/* Success Message */}
