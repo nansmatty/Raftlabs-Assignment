@@ -5,10 +5,16 @@ export async function seedMenuIfEmpty() {
 	const count = await MenuItem.countDocuments();
 
 	if (count > 0) {
-		return;
+		return {
+			seeded: false,
+			insertedCount: 0,
+		};
 	}
 
-	await MenuItem.insertMany(menuSeedData);
+	const insertedMenuItems = await MenuItem.insertMany(menuSeedData);
 
-	console.log(`Seeded ${menuSeedData.length} menu items.`);
+	return {
+		seeded: true,
+		insertedCount: insertedMenuItems.length,
+	};
 }
