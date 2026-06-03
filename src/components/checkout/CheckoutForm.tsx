@@ -26,7 +26,7 @@ export default function CheckoutForm() {
 		mutationFn: createOrder,
 		onSuccess: (data) => {
 			clearCart();
-			router.push(`/order/${data.orderId}`);
+			router.push(`/order/${data.data._id}`);
 		},
 	});
 
