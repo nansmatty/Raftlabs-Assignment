@@ -4,20 +4,18 @@ import MenuCard from '@/components/menu/MenuCard';
 import { mockMenuItems } from '@/data/mock-menu';
 import CartSummary from '@/components/cart/CartSummary';
 import { useCart } from '@/store/CartContext';
-import { useState } from 'react';
-import { Search, Clock, Star, TrendingUp } from 'lucide-react';
+import { Clock, Star, TrendingUp } from 'lucide-react';
 
 const categories = ['All', 'Pizza', 'Burgers', 'Salads', 'Asian', 'Desserts', 'Seafood'];
 
 export default function Home() {
 	const { getTotalItems } = useCart();
-	const [selectedCategory, setSelectedCategory] = useState('All');
 	const totalItems = getTotalItems();
 
 	return (
 		<div className='min-h-screen bg-gray-50'>
 			{/* Hero Section */}
-			<section className='bg-gradient-to-br from-orange-500 via-orange-600 to-red-600 text-white relative overflow-hidden'>
+			<section className='bg-linear-to-br from-orange-500 via-orange-600 to-red-600 text-white relative overflow-hidden'>
 				<div className='absolute inset-0 bg-black/10'></div>
 				<div className='container mx-auto px-4 py-12 md:py-20 relative z-10'>
 					<div className='max-w-3xl'>
@@ -33,19 +31,6 @@ export default function Home() {
 						<p className='text-xl text-orange-50 mb-8 max-w-2xl'>
 							Discover the best meals from top-rated restaurants. Fresh ingredients, quick delivery, unforgettable taste.
 						</p>
-
-						{/* Search Bar */}
-						<div className='bg-white rounded-2xl shadow-2xl p-2 max-w-2xl'>
-							<div className='flex items-center'>
-								<Search className='h-5 w-5 text-gray-400 ml-4' />
-								<input
-									type='text'
-									placeholder='Search for dishes, cuisines, or restaurants...'
-									className='flex-1 px-4 py-4 text-gray-800 placeholder-gray-400 focus:outline-none bg-transparent'
-								/>
-								<button className='bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-xl font-semibold transition-colors'>Search</button>
-							</div>
-						</div>
 
 						{/* Stats */}
 						<div className='grid grid-cols-3 gap-6 mt-10 max-w-xl'>
@@ -70,24 +55,6 @@ export default function Home() {
 								<p className='text-sm text-orange-100'>Avg Delivery</p>
 							</div>
 						</div>
-					</div>
-				</div>
-			</section>
-
-			{/* Categories */}
-			<section className='bg-white border-b sticky top-16 z-40 shadow-sm'>
-				<div className='container mx-auto px-4 py-5'>
-					<div className='flex items-center space-x-3 overflow-x-auto scrollbar-hide'>
-						{categories.map((category) => (
-							<button
-								key={category}
-								onClick={() => setSelectedCategory(category)}
-								className={`px-6 py-2.5 rounded-full font-semibold whitespace-nowrap transition-all duration-200 ${
-									selectedCategory === category ? 'bg-orange-500 text-white shadow-md scale-105' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-								}`}>
-								{category}
-							</button>
-						))}
 					</div>
 				</div>
 			</section>
