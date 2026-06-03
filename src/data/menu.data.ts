@@ -19,12 +19,6 @@ export const menuSeedData = [
 		imageUrl: '...',
 	},
 	{
-		name: 'Paneer Tikka Pizza',
-		description: 'Spicy paneer tikka with onions and capsicum',
-		price: 499,
-		imageUrl: '...',
-	},
-	{
 		name: 'Mexican Green Wave',
 		description: 'Jalapenos, tomatoes, onions, and cheese',
 		price: 479,
@@ -73,21 +67,9 @@ export const menuSeedData = [
 		imageUrl: '...',
 	},
 	{
-		name: 'Italian Herb Pizza',
-		description: 'Cheese pizza seasoned with Italian herbs',
-		price: 379,
-		imageUrl: '...',
-	},
-	{
 		name: 'Double Cheese Pizza',
 		description: 'Extra mozzarella and cheddar cheese',
 		price: 469,
-		imageUrl: '...',
-	},
-	{
-		name: 'Chicken Sausage Pizza',
-		description: 'Chicken sausage with onions and cheese',
-		price: 589,
 		imageUrl: '...',
 	},
 	{
@@ -120,8 +102,6 @@ export const menuSeedData = [
 		price: 629,
 		imageUrl: '...',
 	},
-
-	// Burgers
 	{
 		name: 'Veg Burger',
 		description: 'Loaded veggie burger with fresh lettuce',
