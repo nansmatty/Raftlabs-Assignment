@@ -5,6 +5,16 @@ import { MenuItem } from '@/models/menu.model';
 import { Order } from '@/models/order.model';
 import { createOrderSchema } from '@/schemas/order.schema';
 
+export async function GET() {
+	return apiHandler(async () => {
+		await connectDB();
+
+		const orders = await Order.find().sort({ createdAt: -1 }).lean();
+
+		return orders;
+	});
+}
+
 export async function POST(request: Request) {
 	return apiHandler(async () => {
 		await connectDB();
