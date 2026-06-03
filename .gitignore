@@ -42,3 +42,5 @@ next-env.d.ts
 
 # ai-generated reports
 ai-reports/
+
+UI_IMPLEMENTATION_SUMMARY.md
