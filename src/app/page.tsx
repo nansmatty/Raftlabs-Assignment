@@ -1,11 +1,9 @@
 'use client';
 
 import MenuCard from '@/components/menu/MenuCard';
-import { mockMenuItems } from '@/data/mock-menu';
 import CartSummary from '@/components/cart/CartSummary';
 import { useCartStore } from '@/store/useCartStore';
 import { Clock, Star, TrendingUp } from 'lucide-react';
-import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchMenuItems } from '@/lib/api/menus';
 
