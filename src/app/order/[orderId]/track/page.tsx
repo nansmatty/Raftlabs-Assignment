@@ -14,6 +14,7 @@ export default function OrderTrackingPage({ params }: { params: Promise<{ orderI
 	const { data: orderData } = useQuery({
 		queryKey: ['order', orderId],
 		queryFn: () => getOrderById(orderId),
+		refetchInterval: 10000,
 	});
 
 	const currentStatus = orderData?.data?.status ?? ORDER_STATUS.ORDER_RECEIVED;

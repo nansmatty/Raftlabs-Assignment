@@ -10,6 +10,26 @@ type RouteParams = {
 	params: Promise<{ orderId: string }>;
 };
 
+const ONE_MINUTE = 60 * 1000;
+// const THIRTY_MINUTES = 30 * 60 * 1000;
+
+// For demo, use:
+const THIRTY_MINUTES = 3 * 60 * 1000;
+
+function getAutoStatus(createdAt: Date, currentStatus: string) {
+	const elapsed = Date.now() - new Date(createdAt).getTime();
+
+	if (currentStatus === 'ORDER_RECEIVED' && elapsed >= ONE_MINUTE) {
+		return 'PREPARING';
+	}
+
+	if (currentStatus === 'PREPARING' && elapsed >= THIRTY_MINUTES) {
+		return 'OUT_FOR_DELIVERY';
+	}
+
+	return currentStatus;
+}
+
 export async function GET(_request: Request, { params }: RouteParams) {
 	return apiHandler(async () => {
 		await connectDB();
@@ -24,6 +44,13 @@ export async function GET(_request: Request, { params }: RouteParams) {
 
 		if (!order) {
 			throw new ApiError(404, 'Order not found');
+		}
+
+		const nextStatus = getAutoStatus(order.createdAt, order.status);
+
+		if (nextStatus !== order.status) {
+			order.status = nextStatus;
+			await Order.findByIdAndUpdate(orderId, { status: nextStatus });
 		}
 
 		return order;
