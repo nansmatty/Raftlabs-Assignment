@@ -13,7 +13,7 @@ export default function CartItem({ item }: CartItemProps) {
 	const removeItem = useCartStore((state) => state.removeItem);
 
 	const handleQuantityChange = (newQuantity: number) => {
-		updateQuantity(item.name, newQuantity);
+		updateQuantity(item._id, newQuantity);
 	};
 
 	const subtotal = item.price * item.quantity;
@@ -49,7 +49,7 @@ export default function CartItem({ item }: CartItemProps) {
 				<p className='font-bold text-gray-800'>₹{subtotal.toFixed(2)}</p>
 			</div>
 
-			<button onClick={() => removeItem(item.name)} className='text-red-500 hover:text-red-700 transition-colors' aria-label='Remove item'>
+			<button onClick={() => removeItem(item._id)} className='text-red-500 hover:text-red-700 transition-colors' aria-label='Remove item'>
 				<Trash2 className='h-5 w-5' />
 			</button>
 		</div>
