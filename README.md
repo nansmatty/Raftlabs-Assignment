@@ -8,6 +8,10 @@ This project demonstrates a complete order management system built as part of th
 
 **Loom Video:** _[Add your Loom video link here]_
 
+## 🌐 Live Demo
+
+**Production URL:** https://raftlabs-assignment-lemon.vercel.app
+
 ## 🛠️ Tech Stack
 
 - **Framework:** Next.js 16 (App Router)
@@ -161,6 +165,7 @@ mongodb+srv://<username>:<password>@<cluster>.mongodb.net/?retryWrites=true&w=ma
 - `npm run build` - Build production application
 - `npm start` - Start production server
 - `npm run lint` - Run ESLint for code quality checks
+- `npm run test` - Run Vitest unit tests
 
 ## 📁 Project Structure
 
@@ -224,9 +229,34 @@ src/
 
 ## 🧪 Testing
 
-This is a prototype built for assessment purposes. For a production application, you would add:
+The project includes automated tests using **Vitest** to ensure core functionality works correctly.
 
-- Unit tests (Jest/Vitest)
+### Test Coverage
+
+**Zustand Cart Store:**
+
+- Add item to cart
+- Increase quantity for existing items
+- Update item quantity
+- Total price calculation with delivery fee and tax
+
+**Zod Order Schema Validation:**
+
+- Valid order payload
+- Missing customer name validation
+- Missing menu item ID validation
+- Invalid quantity validation
+
+### Running Tests
+
+```bash
+npm run test
+```
+
+### Future Enhancements
+
+For a production application, you would add:
+
 - Integration tests for API routes
 - E2E tests (Playwright/Cypress)
 - Component tests (React Testing Library)
