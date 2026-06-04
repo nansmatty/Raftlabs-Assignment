@@ -26,7 +26,7 @@ export default function CheckoutForm() {
 		mutationFn: createOrder,
 		onSuccess: (data) => {
 			clearCart();
-			router.push(`/order/${data.data._id}`);
+			router.push(`/order/${data.data._id}/track`);
 		},
 	});
 
@@ -48,35 +48,35 @@ export default function CheckoutForm() {
 				<h2 className='text-xl font-bold text-gray-400 mb-4'>Delivery Information</h2>
 				<div className='space-y-4'>
 					<div>
-						<label htmlFor='customerName' className='block text-sm font-medium text-gray-700 mb-1'>
+						<label htmlFor='customerName' className='block text-sm font-semibold text-gray-700 mb-1'>
 							Full Name *
 						</label>
 						<input
 							type='text'
 							id='customerName'
 							{...register('customerName', { required: 'Full name is required' })}
-							className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent'
+							className='w-full px-4 py-2 text-gray-600 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent'
 							placeholder='John Doe'
 						/>
 						{errors.customerName && <p className='mt-1 text-sm text-red-600'>{errors.customerName.message}</p>}
 					</div>
 
 					<div>
-						<label htmlFor='address' className='block text-sm font-medium text-gray-700 mb-1'>
+						<label htmlFor='address' className='block text-sm font-semibold text-gray-700 mb-1'>
 							Street Address *
 						</label>
 						<input
 							type='text'
 							id='address'
 							{...register('address', { required: 'Address is required' })}
-							className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent'
+							className='w-full px-4 py-2 text-gray-600 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent'
 							placeholder='123 Main Street'
 						/>
 						{errors.address && <p className='mt-1 text-sm text-red-600'>{errors.address.message}</p>}
 					</div>
 
 					<div>
-						<label htmlFor='phoneNumber' className='block text-sm font-medium text-gray-700 mb-1'>
+						<label htmlFor='phoneNumber' className='block text-sm font-semibold text-gray-700 mb-1'>
 							Phone Number *
 						</label>
 						<input
@@ -89,7 +89,7 @@ export default function CheckoutForm() {
 									message: 'Phone number must be at least 10 digits',
 								},
 							})}
-							className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent'
+							className='w-full px-4 py-2 text-gray-600 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent'
 							placeholder='+1 (555) 123-4567'
 						/>
 						{errors.phoneNumber && <p className='mt-1 text-sm text-red-600'>{errors.phoneNumber.message}</p>}
