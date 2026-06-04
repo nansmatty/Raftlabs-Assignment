@@ -13,7 +13,7 @@ type CheckoutFormValues = {
 };
 
 export default function CheckoutForm() {
-	const router = useRouter();
+	// const router = useRouter();
 	const clearCart = useCartStore((state) => state.clearCart);
 
 	const {
@@ -24,9 +24,16 @@ export default function CheckoutForm() {
 
 	const createOrderMutation = useMutation({
 		mutationFn: createOrder,
-		onSuccess: (data) => {
+		onSuccess: (response) => {
+			const orderId = response?.data?._id;
+
+			if (!orderId) {
+				console.error('Order ID missing:', response);
+				return;
+			}
+
 			clearCart();
-			router.push(`/order/${data.data._id}/track`);
+			window.location.assign(`/order/${orderId}/track`);
 		},
 	});
 

@@ -1,26 +1,39 @@
 'use client';
 
-import { use, useState } from 'react';
+import { use } from 'react';
 import { ORDER_STATUS } from '@/types/order';
 import OrderStatusTimeline from '@/components/order/OrderStatusTimeline';
 import Link from 'next/link';
 import { ArrowLeft, Phone, Mail } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import { getOrderById } from '@/lib/api/orders';
 
 export default function OrderTrackingPage({ params }: { params: Promise<{ orderId: string }> }) {
 	const { orderId } = use(params);
 
-	// Mock current status - in real app, this would come from API
-	// For demo purposes, you can change this to see different states
-	const [currentStatus] = useState(ORDER_STATUS.PREPARING);
+	const { data: orderData } = useQuery({
+		queryKey: ['order', orderId],
+		queryFn: () => getOrderById(orderId),
+	});
+
+	const currentStatus = orderData?.data?.status ?? ORDER_STATUS.ORDER_RECEIVED;
+
+	const orderDate = orderData?.data?.createdAt
+		? new Intl.DateTimeFormat('en-IN', {
+				day: '2-digit',
+				month: '2-digit',
+				year: 'numeric',
+			}).format(new Date(orderData.data.createdAt))
+		: 'Loading...';
 
 	// Mock order details
 	const orderDetails = {
-		orderId: orderId,
-		orderDate: new Date().toLocaleDateString(),
+		orderId,
+		orderDate,
 		estimatedDelivery: '30-45 minutes',
-		customerName: 'John Doe',
-		deliveryAddress: '123 Main Street, New York, NY 10001',
-		totalAmount: 45.97,
+		customerName: orderData?.data?.customerName,
+		deliveryAddress: orderData?.data?.address,
+		totalAmount: orderData?.data?.totalAmount || 0,
 	};
 
 	return (
@@ -74,7 +87,7 @@ export default function OrderTrackingPage({ params }: { params: Promise<{ orderI
 
 								<div className='border-t pt-3'>
 									<p className='text-gray-600'>Total Amount</p>
-									<p className='text-xl font-bold text-orange-500'>${orderDetails.totalAmount.toFixed(2)}</p>
+									<p className='text-xl font-bold text-orange-500'>₹{orderDetails.totalAmount.toFixed(2)}</p>
 								</div>
 							</div>
 

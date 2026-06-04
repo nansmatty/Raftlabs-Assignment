@@ -24,3 +24,14 @@ export async function createOrder(payload: CreateOrderPayload) {
 
 	return response.json();
 }
+
+export const getOrderById = async (orderId: string) => {
+	const response = await fetch(`/api/orders/${orderId}`);
+
+	if (!response.ok) {
+		const errorData = await response.json();
+		throw new Error(errorData.message || 'Failed to fetch order');
+	}
+
+	return response.json();
+};
