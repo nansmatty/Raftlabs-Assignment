@@ -26,7 +26,7 @@ export default function CartItem({ item }: CartItemProps) {
 
 			<div className='flex-1'>
 				<h3 className='font-semibold text-gray-800'>{item.name}</h3>
-				<p className='text-sm text-gray-600'>${item.price.toFixed(2)} each</p>
+				<p className='text-sm text-gray-600'>₹{item.price.toFixed(2)} each</p>
 			</div>
 
 			<div className='flex items-center space-x-3'>
@@ -46,7 +46,7 @@ export default function CartItem({ item }: CartItemProps) {
 			</div>
 
 			<div className='w-20 text-right'>
-				<p className='font-bold text-gray-800'>${subtotal.toFixed(2)}</p>
+				<p className='font-bold text-gray-800'>₹{subtotal.toFixed(2)}</p>
 			</div>
 
 			<button onClick={() => removeItem(item.name)} className='text-red-500 hover:text-red-700 transition-colors' aria-label='Remove item'>
